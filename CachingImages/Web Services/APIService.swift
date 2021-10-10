@@ -9,11 +9,18 @@ import UIKit
 
 class APIService: NSObject {
     
-    private let sourcesURL = URL(string: "https://picsum.photos/v2/list?page=1&limit=30")!
+    var mainURL : URL?
     
-    func apiToGetPhotosData(completion : @escaping ([PhotosData]) -> ()){
-        
-        URLSession.shared.dataTask(with: sourcesURL) { (data, urlResponse, error) in
+    func setPagingForSourceURL(page: String){
+        let sourceString = "https://picsum.photos/v2/list?page=1&limit=" + page
+        let sourceURL = URL(string: sourceString)
+        mainURL = sourceURL
+    }
+    
+    
+    func apiToGetPhotosData(pageNum: String,completion : @escaping ([PhotosData]) -> ()){
+        setPagingForSourceURL(page: pageNum)
+        URLSession.shared.dataTask(with: mainURL!) { (data, urlResponse, error) in
             if let data = data {
                 
                 let jsonDecoder = JSONDecoder()

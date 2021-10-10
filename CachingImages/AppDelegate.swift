@@ -6,14 +6,15 @@
 //
 
 import UIKit
+import Kingfisher
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        let cache = ImageCache.default
+        cache.memoryStorage.config.countLimit = 20
+        cache.memoryStorage.config.expiration = .never
         return true
     }
 
